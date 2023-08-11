@@ -1,0 +1,53 @@
+.container { 
+    display: flex;
+    flex-direction: column;
+    width: 480px;
+    height: 850px;
+    border: 1px solid black;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    background-color: #212121;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 30px;
+    row-gap: 30px;
+}
+
+.screen {
+    height: 220px;
+    width: 400px;
+    background-color: #393E46;
+    margin-bottom: 30px;
+    border-radius: 20px;
+}
+
+.btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    font-size: 25pt;
+    background-color: #b8b8b8;
+}
+
+#zero {
+    width: 190px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.blue {
+    background-color: #285f81;
+}
+
+.grey {
+    background-color: #858585
+}
+
