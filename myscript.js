@@ -13,17 +13,22 @@ let inputs = "";
 function displayInputs() {
     num.forEach(button => {
         button.addEventListener("click", () => {
-            let currentInput = display.textContent;
-            let newInput = currentInput + button.textContent;
-            display.textContent = newInput;
+           if(display.textContent.length < 12) {
+                let currentInput = display.textContent;
+                let newInput = currentInput + button.textContent;
+                display.textContent = newInput;
+    
+           }
         });
     });
 }
 
 function negateInput() {
     negateBtn.addEventListener("click", () => {
-        let currentInput = parseFloat(display.textContent);
-        display.textContent = -1 * currentInput;
+        if(display.textContent.length > 0) {
+            let currentInput = parseFloat(display.textContent);
+            display.textContent = -1 * currentInput;
+        }
     });
 }
 
@@ -56,8 +61,9 @@ function pushOperation() {
     operators.forEach(operator => {
         operator.addEventListener("click", ()=> {
             inputs += display.textContent + operator.textContent;
+            const overflow = overflowDisplay(inputs, true); 
+            inputsDisplay.textContent = overflow; 
             display.textContent = ""; 
-            inputsDisplay.textContent = inputs; 
         });
     });
 }
@@ -80,6 +86,18 @@ function calculate(left, op, right) {
             return left * right;
         default: 
             return "Error";
+    }
+}
+
+function overflowDisplay(display, needEllip) {
+    if(display.length > 22 && needEllip) {
+        return display.substring(0, 22) + "..."; 
+    }
+    else if(display.length > 13 && !needEllip) {
+        return display.substring(0, 13);
+    }
+    else {
+        return display; 
     }
 }
 
@@ -106,19 +124,24 @@ function pemdas() {
     inputsArr.pop();
     inputsArr = reduceArr("x", "/", inputsArr); 
     inputsArr = reduceArr("+", "-", inputsArr); 
+    
     if(isNaN(inputsArr)) {
         return "Error";
     }
-    return parseFloat(inputsArr[0]).toFixed(11); 
+    
+    if(inputsArr[0] > 999999999999 || inputsArr[0] < 0.0000000001) {
+        inputsArr[0] = inputsArr[0].toExponential(7); 
+    }
+
+    return overflowDisplay(inputsArr[0].toString(), false);
 }
 
 function equals() {
     equalsBtn.addEventListener("click", () => {
         inputs += display.textContent + " =";
-        inputsDisplay.textContent = inputs;
+        inputsDisplay.textContent = overflowDisplay(inputs);
         display.textContent = pemdas();
         inputs = "";
-
     }); 
 }
 
