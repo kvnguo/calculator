@@ -129,8 +129,9 @@ function pemdas() {
         return "Error";
     }
     
-    if(inputsArr[0] > 999999999999 || inputsArr[0] < 0.0000000001) {
-        inputsArr[0] = inputsArr[0].toExponential(7); 
+    const result = parseFloat(inputsArr[0]);
+    if (Math.abs(result) > 999999999999) {
+        return result.toExponential(7);
     }
 
     return overflowDisplay(inputsArr[0].toString(), false);
